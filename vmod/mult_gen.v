@@ -12,7 +12,7 @@ module mult_gen # (
 	parameter IN_DATA_TYPE = 16,
 	parameter OUT_DATA_TYPE = 32,
 	parameter NUM_PES = 64) (
-	clk, 
+	CLK, 
 	rst,
 	i_valid, 
 	i_data_bus,
@@ -21,7 +21,7 @@ module mult_gen # (
 	o_data_bus
 );
 
-	input clk;
+	input CLK;
 	input rst;
 	input i_valid;
 	input [NUM_PES * IN_DATA_TYPE -1 :0] i_data_bus;
@@ -33,7 +33,7 @@ module mult_gen # (
 	reg r_stationary;
 	
 	// FF i_valid and i_stationary for timing fix
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		r_valid <= i_valid;
 		r_stationary <= i_stationary;
 	end
@@ -46,7 +46,7 @@ module mult_gen # (
 			if (i == 0) begin : with_valid
 				// declare mult switcih
 				mult_switch my_mult_switch (
-					.clk(clk),
+					.CLK(CLK),
 					.rst(rst),
 					.i_valid(r_valid),
 					.i_data(i_data_bus[i*IN_DATA_TYPE +: IN_DATA_TYPE]),
@@ -56,7 +56,7 @@ module mult_gen # (
 				);
 			end else begin : without_valid
 				mult_switch my_mult_switch (
-					.clk(clk),
+					.CLK(CLK),
 					.rst(rst),
 					.i_valid(r_valid),
 					.i_stationary(r_stationary),

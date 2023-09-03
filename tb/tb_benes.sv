@@ -16,7 +16,7 @@ module tb_benes ();
 
 	parameter NUM_TESTS = 3;
 	
-	reg clk = 0;
+	reg CLK = 0;
 	reg rst = 0;
 	reg [2*(LEVELS-2)*NUM_PES + NUM_PES-1 : 0] i_mux_bus [0:NUM_TESTS-1] = 
 		{88'hFF_FFFF_FFFF_FFFF_FFFF_FFFF, 
@@ -32,10 +32,10 @@ module tb_benes ();
 	reg [10:0] counter = 'd0;
 	
 	// Generate simulation clock (NOT USED)
-	always #1 clk = !clk;
+	always #1 CLK = !CLK;
 	
 	// set the input values per clock cycle
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		r_mux_bus = i_mux_bus[counter];
 		if (counter < NUM_TESTS-1) begin
 			counter = counter + 1'b1;
@@ -46,7 +46,7 @@ module tb_benes ();
 
 	// instantiate system
 	benes my_benes(
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_data_bus(i_data_bus),
 		.i_mux_bus(r_mux_bus),

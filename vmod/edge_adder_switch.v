@@ -13,7 +13,7 @@ module edge_adder_switch # (
 	parameter DATA_TYPE = 32,
 	parameter NUM_IN = 4,
 	parameter SEL_IN = 2) (
-	clk,
+	CLK,
 	rst,
 	
 	i_valid, // valid data signal
@@ -32,7 +32,7 @@ module edge_adder_switch # (
 
 	parameter NUM_OUT =1;
 
-	input clk;
+	input CLK;
 	input rst;
 	
 	input i_valid; // input data valid
@@ -67,7 +67,7 @@ module edge_adder_switch # (
 	reg [1:0] r_vn_valid;
 	
 	
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		r_valid <= i_valid;
 	end
 	
@@ -84,7 +84,7 @@ module edge_adder_switch # (
 	);
 	
 	// Reconfigurable control logic select
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_adder <= 'b0;
 			r_vn <= 'b0;
@@ -131,7 +131,7 @@ module edge_adder_switch # (
 	end
 	
 	// flop i_cmd for timing logic
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_add_en <= 'b0;
 		end else begin
@@ -159,7 +159,7 @@ module edge_adder_switch # (
 	
 	// instantiate FP32 adder
 	adder32 my_adder (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.A(w_sel_data[DATA_TYPE+:DATA_TYPE]),
 		.B(w_sel_data[0+:DATA_TYPE]),

@@ -12,14 +12,14 @@ module xbar # (
 	parameter NUM_PES = 64,
 	parameter INPUT_BW = 64,
 	parameter LOG2_PES = 6) (
-	clk,
+	CLK,
 	rst,
 	i_data_bus, // input data bus
 	i_mux_bus, // mux select control bus
 	o_dist_bus // output bus to the multipliers
 );
 
-	input clk;
+	input CLK;
 	input rst;
 	input [INPUT_BW*DATA_TYPE-1 : 0] i_data_bus;
 	input [LOG2_PES * NUM_PES -1 : 0] i_mux_bus;
@@ -35,7 +35,7 @@ module xbar # (
 				.DATA_TYPE(DATA_TYPE),
 				.INPUT_BW(INPUT_BW),
 				.SEL_SIZE(LOG2_PES)) my_mux (
-				.clk(clk),
+				.CLK(CLK),
 				.rst(rst),
 				.i_data_bus(i_data_bus),
 				.i_mux_sel(i_mux_bus[i*LOG2_PES+:LOG2_PES]),
@@ -44,7 +44,7 @@ module xbar # (
 		end
 	endgenerate
 	
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		o_dist_bus = w_dist_bus;
 	end
 	
@@ -54,13 +54,13 @@ module mux # (
 	parameter DATA_TYPE = 16,
 	parameter INPUT_BW = 128,
 	parameter SEL_SIZE = 7) (
-	clk,
+	CLK,
 	rst,
 	i_data_bus,
 	i_mux_sel,
 	o_dist
 );
-	input clk;
+	input CLK;
 	input rst;
 	input [INPUT_BW*DATA_TYPE-1 : 0] i_data_bus;
 	input [SEL_SIZE-1 : 0] i_mux_sel;

@@ -13,7 +13,7 @@ module tb_add ();
 	parameter DATA_TYPE = 16; // data type width
 	parameter NUM_TESTS = 4;
 
-	reg clk = 0;
+	reg CLK = 0;
 	reg rst = 0;
 
 	reg [DATA_TYPE-1:0] input_A [0:NUM_TESTS-1] = 
@@ -32,10 +32,10 @@ module tb_add ();
 	reg [DATA_TYPE-1:0] B;
 
 	// Generate simulation clock
-	always #1 clk = !clk;
+	always #1 CLK = !CLK;
 
 	// set the input values per clock cycle
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		A = input_A[counter];
 		B = input_B[counter];
 		if (counter < NUM_TESTS-1) begin
@@ -47,7 +47,7 @@ module tb_add ();
 
 	// instantiate system
 	adder my_adder(
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.A(A),
 		.B(B),

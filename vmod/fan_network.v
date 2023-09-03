@@ -9,7 +9,7 @@ module fan_network # (
 	parameter DATA_TYPE =  32 ,
 	parameter NUM_PES =  32 ,
 	parameter LOG2_PES =  5 ) (
-	clk,
+	CLK,
 	rst,
 	i_valid,
 	i_data_bus,
@@ -19,7 +19,7 @@ module fan_network # (
 	o_valid,
 	o_data_bus
 );
-	input clk;
+	input CLK;
 	input rst;
 	input i_valid; // valid input data bus
 	input [NUM_PES*DATA_TYPE-1 : 0] i_data_bus; // input data bus
@@ -71,7 +71,7 @@ module fan_network # (
 	reg r_final_add;
 	reg r_final_add2;
 	// FAN topology flip flops between forwarding levels to maintain pipeline timing
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_fan_ff_lvl_0_to_4 = 'd0;
 			r_fan_ff_lvl_0_to_3 = 'd0;
@@ -117,7 +117,7 @@ module fan_network # (
 
 
 	// Output Buffers and Muxes across all levels to pipeline finished VNs (complete Psums)
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_lvl_output_ff[1023:0] <= 'd0;
 			r_lvl_output_ff_valid[31:0] <= 'd0;
@@ -398,7 +398,7 @@ module fan_network # (
 	end
 
 
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_lvl_output_ff[2047:1024] <= 'd0;
 			r_lvl_output_ff_valid[63:32] <= 'd0;
@@ -615,7 +615,7 @@ module fan_network # (
 	end
 
 
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_lvl_output_ff[3071:2048] <= 'd0;
 			r_lvl_output_ff_valid[95:64] <= 'd0;
@@ -792,7 +792,7 @@ module fan_network # (
 	end
 
 
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_lvl_output_ff[4095:3072] <= 'd0;
 			r_lvl_output_ff_valid[127:96] <= 'd0;
@@ -949,7 +949,7 @@ module fan_network # (
 	end
 
 
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_lvl_output_ff[5119:4096] <= 'd0;
 			r_lvl_output_ff_valid[159:128] <= 'd0;
@@ -1108,7 +1108,7 @@ module fan_network # (
 	genvar i;
 	generate
 		for (i=0; i < 6; i=i+1) begin
-			always @ (posedge clk) begin
+			always @ (posedge CLK) begin
 				if (rst == 1'b1) begin
 					r_valid[i+1] <= 1'b0;
 				end else begin
@@ -1124,7 +1124,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_0 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[63 : 0]),
@@ -1140,7 +1140,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_1 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[63:32], w_fan_lvl_0[31:0]}),
@@ -1156,7 +1156,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_2 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[127 : 64]),
@@ -1172,7 +1172,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 4 ),
 		.SEL_IN( 2 )) my_adder_3 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[2]),
 		.i_data_bus({ w_fan_lvl_1[63:32], r_fan_ff_lvl_0_to_2[63:32], r_fan_ff_lvl_0_to_2[31:0], w_fan_lvl_1[31:0]}),
@@ -1188,7 +1188,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_4 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[191 : 128]),
@@ -1204,7 +1204,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_5 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[191:160], w_fan_lvl_0[159:128]}),
@@ -1220,7 +1220,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_6 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[255 : 192]),
@@ -1236,7 +1236,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 6 ),
 		.SEL_IN( 4 )) my_adder_7 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[3]),
 		.i_data_bus({ w_fan_lvl_2[63:32], r_fan_ff_lvl_1_to_3[63:32], r_fan_ff_lvl_0_to_3[63:32], r_fan_ff_lvl_0_to_3[31:0], r_fan_ff_lvl_1_to_3[31:0], w_fan_lvl_2[31:0]}),
@@ -1252,7 +1252,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_8 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[319 : 256]),
@@ -1268,7 +1268,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_9 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[319:288], w_fan_lvl_0[287:256]}),
@@ -1284,7 +1284,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_10 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[383 : 320]),
@@ -1300,7 +1300,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 4 ),
 		.SEL_IN( 2 )) my_adder_11 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[2]),
 		.i_data_bus({ w_fan_lvl_1[191:160], r_fan_ff_lvl_0_to_2[191:160], r_fan_ff_lvl_0_to_2[159:128], w_fan_lvl_1[159:128]}),
@@ -1316,7 +1316,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_12 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[447 : 384]),
@@ -1332,7 +1332,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_13 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[447:416], w_fan_lvl_0[415:384]}),
@@ -1348,7 +1348,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_14 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[511 : 448]),
@@ -1364,7 +1364,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 8 ),
 		.SEL_IN( 4 )) my_adder_15 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[4]),
 		.i_data_bus({ w_fan_lvl_3[63:32], r_fan_ff_lvl_2_to_4[63:32], r_fan_ff_lvl_1_to_4[63:32], r_fan_ff_lvl_0_to_4[63:32], r_fan_ff_lvl_0_to_4[31:0], r_fan_ff_lvl_1_to_4[31:0], r_fan_ff_lvl_2_to_4[31:0], w_fan_lvl_3[31:0]}),
@@ -1380,7 +1380,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_16 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[575 : 512]),
@@ -1396,7 +1396,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_17 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[575:544], w_fan_lvl_0[543:512]}),
@@ -1412,7 +1412,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_18 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[639 : 576]),
@@ -1428,7 +1428,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 4 ),
 		.SEL_IN( 2 )) my_adder_19 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[2]),
 		.i_data_bus({ w_fan_lvl_1[319:288], r_fan_ff_lvl_0_to_2[319:288], r_fan_ff_lvl_0_to_2[287:256], w_fan_lvl_1[287:256]}),
@@ -1444,7 +1444,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_20 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[703 : 640]),
@@ -1460,7 +1460,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_21 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[703:672], w_fan_lvl_0[671:640]}),
@@ -1476,7 +1476,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_22 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[767 : 704]),
@@ -1492,7 +1492,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 6 ),
 		.SEL_IN( 4 )) my_adder_23 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[3]),
 		.i_data_bus({ w_fan_lvl_2[191:160], r_fan_ff_lvl_1_to_3[191:160], r_fan_ff_lvl_0_to_3[191:160], r_fan_ff_lvl_0_to_3[159:128], r_fan_ff_lvl_1_to_3[159:128], w_fan_lvl_2[159:128]}),
@@ -1508,7 +1508,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_24 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[831 : 768]),
@@ -1524,7 +1524,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_25 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[831:800], w_fan_lvl_0[799:768]}),
@@ -1540,7 +1540,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_26 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[895 : 832]),
@@ -1556,7 +1556,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 4 ),
 		.SEL_IN( 2 )) my_adder_27 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[2]),
 		.i_data_bus({ w_fan_lvl_1[447:416], r_fan_ff_lvl_0_to_2[447:416], r_fan_ff_lvl_0_to_2[415:384], w_fan_lvl_1[415:384]}),
@@ -1572,7 +1572,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_28 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[959 : 896]),
@@ -1588,7 +1588,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_29 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[1]),
 		.i_data_bus({ w_fan_lvl_0[959:928], w_fan_lvl_0[927:896]}),
@@ -1604,7 +1604,7 @@ module fan_network # (
 		.DATA_TYPE( 32 ),
 		.NUM_IN( 2 ),
 		.SEL_IN( 2 )) my_adder_30 (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_valid[0]),
 		.i_data_bus(i_data_bus[1023 : 960]),
@@ -1618,7 +1618,7 @@ module fan_network # (
 
 
 	// Flop last level adder cmd for timing matching
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_final_add <= 'd0;
 			r_final_add2 <= 'd0;

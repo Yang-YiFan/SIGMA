@@ -11,10 +11,10 @@
 // NOTE: MORE VERIFICATION NEEDED
 /////////////////////////////////////////////////////////////
 
-module multiplier(clk, A, B, O);
+module multiplier(CLK, A, B, O);
 
   input [15:0] A, B;
-  input clk;
+  input CLK;
   output [15:0] O;
 
   wire a_sign;
@@ -54,7 +54,7 @@ module multiplier(clk, A, B, O);
   assign multiplier_a_in = A; // timing fix - singly cycle
   assign multiplier_b_in = B; // timing fix - single cycle
 
-  always @ (posedge clk) begin //Multiplication
+  always @ (posedge CLK) begin //Multiplication
     //If a is NaN return NaN
     if (a_exponent == 255 && a_mantissa != 0) begin
       o_sign = a_sign;

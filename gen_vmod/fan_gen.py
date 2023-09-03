@@ -21,7 +21,7 @@ print "module fan_network # ("
 print "\tparameter DATA_TYPE = ", OUT_DATA_TYPE, ","
 print "\tparameter NUM_PES = ", NUM_PES, ","
 print "\tparameter LOG2_PES = ", LOG2_PES, ") ("
-print "\tclk,"
+print "\tCLK,"
 print "\trst,"
 print "\ti_valid," # valid input data bus signal
 print "\ti_data_bus," # input data bus from multipliers
@@ -32,7 +32,7 @@ print "\to_valid," # output valid signal bus
 print "\to_data_bus" # output data bus
 print ");" 
 
-print "\tinput clk;"
+print "\tinput CLK;"
 print "\tinput rst;"
 print "\tinput i_valid; // valid input data bus"
 print "\tinput [NUM_PES*DATA_TYPE-1 : 0] i_data_bus; // input data bus"
@@ -94,7 +94,7 @@ print "\treg r_final_add2;"
 
 # Flip flops for forwarding levels to maintain pipeline timing
 print "\t// FAN topology flip flops between forwarding levels to maintain pipeline timing"
-print "\talways @ (posedge clk) begin"
+print "\talways @ (posedge CLK) begin"
 print "\t\tif (rst == 1'b1) begin" # set FFs to zero when reset is 1'b1
 for i in range(LOG2_PES - 2):
 	for j in range(LOG2_PES - 2 - i):
@@ -133,7 +133,7 @@ for i in range(LOG2_PES):
 	max_range_v = (i+1)*NUM_PES-1
 	min_range_v = i*NUM_PES
 	adder_vn = []
-	print "\talways @ (posedge clk) begin"
+	print "\talways @ (posedge CLK) begin"
 	print "\t\tif (rst == 1'b1) begin" # set output VN FFs to zero when reset is 1'b1
 	print "\t\t\tr_lvl_output_ff[" + str(max_range) + ":" + str(min_range) + "] <= 'd0;"
 	print "\t\t\tr_lvl_output_ff_valid[" + str(max_range_v) + ":" + str(min_range_v) + "] <= 'd0;"
@@ -195,7 +195,7 @@ print "\tend\n"
 print "\tgenvar i;"
 print "\tgenerate"
 print "\t\tfor (i=0; i < " + str(LOG2_PES + 1) + "; i=i+1) begin"
-print "\t\t\talways @ (posedge clk) begin"
+print "\t\t\talways @ (posedge CLK) begin"
 print "\t\t\t\tif (rst == 1'b1) begin"
 print "\t\t\t\t\tr_valid[i+1] <= 1'b0;"
 print "\t\t\t\tend else begin"
@@ -229,7 +229,7 @@ for adderID in range(NUM_PES - 1):
 	else:
 		print "\t\t.SEL_IN(", SEL_IN, ")) my_adder_" + str(adderID) + " ("	
 		
-	print "\t\t.clk(clk),"
+	print "\t\t.CLK(CLK),"
 	print "\t\t.rst(rst),"
 	print "\t\t.i_valid(r_valid[" + str(lvl) +"]),"
 
@@ -259,7 +259,7 @@ print "\n"
 ##########################################################
 # Flop last level adder cmd for timing matching
 print "\t// Flop last level adder cmd for timing matching"
-print "\talways @ (posedge clk) begin"
+print "\talways @ (posedge CLK) begin"
 print "\t\tif (rst == 1'b1) begin"
 print "\t\t\tr_final_add <= 'd0;"
 print "\t\t\tr_final_add2 <= 'd0;"

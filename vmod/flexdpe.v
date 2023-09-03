@@ -9,7 +9,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 module flexdpe(
-	clk,
+	CLK,
 	rst,
 	i_data_valid, // input data bus valid
 	i_data_bus, // input data bus
@@ -26,7 +26,7 @@ module flexdpe(
 	parameter NUM_PES = 32; // number of PES
 	parameter LOG2_PES = 5;
 
-	input clk;
+	input CLK;
 	input rst;
 	input i_data_valid;
 	input [NUM_PES * IN_DATA_TYPE -1 : 0] i_data_bus;
@@ -53,7 +53,7 @@ module flexdpe(
 	reg [NUM_PES * LOG2_PES -1:0] r_dest_bus_ff, r_dest_bus_ff2;
 
 	// adjust some input signal delays from xbar and controller
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		r_data_bus_ff <= i_data_bus;
 		r_data_bus_ff2 <= r_data_bus_ff;
 		r_data_valid_ff <= i_data_valid; 
@@ -70,7 +70,7 @@ module flexdpe(
 		.NUM_PES(NUM_PES),
 		.LOG2_PES(LOG2_PES))
 		my_controller(
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_vn(i_vn_seperator),
 		.i_stationary(i_stationary),
@@ -88,7 +88,7 @@ module flexdpe(
 		.INPUT_BW(NUM_PES),
 		.LOG2_PES(LOG2_PES))
 		my_xbar (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_data_bus(r_data_bus_ff2),
 		.i_mux_bus(r_dest_bus_ff2),
@@ -101,7 +101,7 @@ module flexdpe(
 		.OUT_DATA_TYPE(OUT_DATA_TYPE),
 		.NUM_PES(NUM_PES))
 		my_mult_gen (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(r_data_valid_ff2),
 		.i_data_bus(w_dist_bus),
@@ -116,7 +116,7 @@ module flexdpe(
 		.NUM_PES(NUM_PES),
 		.LOG2_PES(LOG2_PES))
 		my_fan_network(
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_valid(w_reduction_valid),
 		.i_data_bus(r_mult),

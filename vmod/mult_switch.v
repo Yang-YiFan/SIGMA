@@ -9,7 +9,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 module mult_switch(
-	clk, 
+	CLK, 
 	rst,
 	i_valid, // input valid signal
 	i_data, // input data
@@ -18,7 +18,7 @@ module mult_switch(
 	o_data // output data
 );
 
-	input clk;
+	input CLK;
 	input rst;
 	input i_valid;
 	input [15:0] i_data;
@@ -34,7 +34,7 @@ module mult_switch(
 	reg [15:0] w_B;
 	
 	// logic to store correct value into the stationary buffer
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_buffer <= 'd0; // clear buffer during reset
 			r_buffer_valid <= 1'b0; // invalidate buffer
@@ -50,7 +50,7 @@ module mult_switch(
 	assign w_B = (r_buffer_valid == 1'b1 && i_valid == 1'b1) ? r_buffer : 'd0; // stationary
 	
 	// logic to generate correct output valid signal
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (r_buffer_valid == 1'b1 && i_valid == 1'b1) begin
 			o_valid <= 1'b1;
 		end else begin
@@ -60,7 +60,7 @@ module mult_switch(
 
 	// instantiate multiplier 
 	multiplier my_multiplier (
-		.clk(clk),
+		.CLK(CLK),
 		.A(w_A), // stationary value
 		.B(w_B), // streaming value
 		.O(o_data[31:16])

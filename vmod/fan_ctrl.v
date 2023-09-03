@@ -9,7 +9,7 @@ module fan_ctrl # (
 	parameter DATA_TYPE =  32 ,
 	parameter NUM_PES =  32 ,
 	parameter LOG2_PES =  5 ) (
-	clk,
+	CLK,
 	rst,
 	i_vn,
 	i_stationary,
@@ -19,7 +19,7 @@ module fan_ctrl # (
 	o_reduction_sel,
 	o_reduction_valid
 );
-	input clk;
+	input CLK;
 	input rst;
 	input [NUM_PES*LOG2_PES-1: 0] i_vn; // different partial sum bit seperator
 	input i_stationary; // if input data is for stationary or streaming
@@ -68,7 +68,7 @@ module fan_ctrl # (
 	generate
 		for (i=0; i < 2; i=i+1) begin : vn_ff
 			if (i == 0) begin: pass
-				always @ (posedge clk) begin
+				always @ (posedge CLK) begin
 					if (rst == 1'b1) begin
 						r_vn[(i+1)*NUM_PES*LOG2_PES-1:i*NUM_PES*LOG2_PES] <= 'd0;
 					end else begin
@@ -76,7 +76,7 @@ module fan_ctrl # (
 					end
 				end
 			end else begin: flop
-				always @ (posedge clk) begin
+				always @ (posedge CLK) begin
 					if (rst == 1'b1) begin
 						r_vn[(i+1)*NUM_PES*LOG2_PES-1:i*NUM_PES*LOG2_PES] <= 'd0;
 					end else begin
@@ -731,7 +731,7 @@ module fan_ctrl # (
 
 
 	// generate diagonal flops for cmd and sel timing alignment
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_add_lvl_0 <= 'd0;
 			r_add_lvl_1 <= 'd0;
@@ -802,7 +802,7 @@ module fan_ctrl # (
 
 
 	// Adjust output valid timing and logic
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (i_stationary == 1'b0 && i_data_valid == 1'b1) begin
 			r_valid[0] <= 1'b1;
 		end else begin
@@ -812,7 +812,7 @@ module fan_ctrl # (
 
 	generate
 		for (i=0; i < 4; i=i+1) begin
-			always @ (posedge clk) begin
+			always @ (posedge CLK) begin
 				if (rst == 1'b1) begin
 					r_valid[i+1] <= 1'b0;
 				end else begin
@@ -831,7 +831,7 @@ module fan_ctrl # (
 	end
 
 	// assigning diagonally flopped cmd and sel
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			o_reduction_add <= 'd0;
 			o_reduction_cmd <= 'd0;

@@ -9,10 +9,10 @@
 // NOTE: MORE VERIFICATION NEEDED
 /////////////////////////////////////////////////////////////
 
-module adder32(clk, rst, A, B, O);
+module adder32(CLK, rst, A, B, O);
 
   input [31:0] A, B;
-  input clk;
+  input CLK;
   input rst;
   output reg [31:0] O;
 
@@ -49,7 +49,7 @@ module adder32(clk, rst, A, B, O);
   assign adder_b_in = B;
   
   //covers corner cases and uses general adder logic
-  always @ ( posedge clk ) begin
+  always @ ( posedge CLK ) begin
 	if (rst == 1'b1) begin
 		O = 32'd0;
 	end else begin

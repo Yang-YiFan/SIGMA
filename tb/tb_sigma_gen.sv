@@ -13,7 +13,7 @@ module tb_flexdpe ();
 	parameter NUM_PES = 32; // number of PE Inputs
 	parameter LOG2_PES = 5; // log2 of the number of PEs
 	parameter NUM_TESTS = 8;
-	reg clk = 0;
+	reg CLK = 0;
 	reg rst;
 	reg [NUM_PES * IN_DATA_TYPE -1 : 0] i_data_bus [0:NUM_TESTS-1] =
 		{
@@ -69,7 +69,7 @@ module tb_flexdpe ();
 
 
 	// generate simulation clock
-	always #1 clk = !clk;
+	always #1 CLK = !CLK;
 
 
 	// set reset signal
@@ -81,7 +81,7 @@ module tb_flexdpe ();
 
 
 	// generate input signals to DUT
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b0 && counter < NUM_TESTS) begin
 			r_data_bus = i_data_bus[counter];
 			r_data_valid = i_data_valid[counter];
@@ -108,7 +108,7 @@ module tb_flexdpe ();
 		.NUM_PES(NUM_PES),
 		.LOG2_PES(LOG2_PES))
 		my_flexdpe (
-		.clk(clk),
+		.CLK(CLK),
 		.rst(rst),
 		.i_data_valid(r_data_valid),
 		.i_data_bus(r_data_bus),
@@ -137,7 +137,7 @@ module tb_flexdpe ();
 	end
 
 
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		$fwrite(g, "------------------------------------------ \n");
 		$fwrite(g, "%d, %h, %h\n", $time, my_flexdpe.my_fan_network.o_valid[31:0], my_flexdpe.my_fan_network.o_data_bus[1023:0]);
 	end

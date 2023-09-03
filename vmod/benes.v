@@ -107,14 +107,14 @@ module benes # (
 	parameter DATA_TYPE = 16, // data type
 	parameter NUM_PES = 8, // num of pes
 	parameter LEVELS = 7) ( // 2*(log2PE) + 1
-	clk,
+	CLK,
 	rst,
 	i_data_bus, // input data bus
 	i_mux_bus, // mux select control bus
 	o_dist_bus // output bus to the multipliers
 );
 
-	input clk;
+	input CLK;
 	input rst;
 	input [NUM_PES * DATA_TYPE -1 : 0] i_data_bus; // input data bus
 	input [2*(LEVELS-2)*NUM_PES + NUM_PES-1 : 0] i_mux_bus; // mux select bus
@@ -135,7 +135,7 @@ module benes # (
 		end
 	end
 	
-	always @ (posedge clk) begin
+	always @ (posedge CLK) begin
 		if (rst == 1'b1) begin
 			r_mux_bus_ff <= 'd0;
 			o_dist_bus <= 'd0;
