@@ -88,7 +88,7 @@ print "\n"
 # Generate FF for i_vn cycle delays
 ##########################################################
 
-print "\tgenvar i, x;;"
+print "\tgenvar i, x;"
 # add flip flops to delay i_vn
 print "\t// add flip flops to delay i_vn"
 print "\tgenerate"

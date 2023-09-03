@@ -63,7 +63,7 @@ module fan_ctrl # (
 	reg [4 : 0 ] r_valid;
 
 
-	genvar i, x;;
+	genvar i, x;
 	// add flip flops to delay i_vn
 	generate
 		for (i=0; i < 2; i=i+1) begin : vn_ff

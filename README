@@ -14,6 +14,14 @@ Open Waveform Viewer:
 
 High level details can be found in the powerpoint.
 
-
-
+ms synth -l full bfp16_mult.v "multiplier" 1092
+ms synth -l full bfp32_adder.v "adder32" 3463
+ms synth -l full mult_gen.v "mult_gen" 73369
+ms synth -l full adder_switch.v "adder_switch" 4816
+ms synth -l full edge_adder_switch.v "edge_adder_switch" 4653
+ms synth -l full mult_switch.v "mult_switch" 1262
+ms synth -l full benes.v "benes" 4518
+ms synth -l full fan_ctrl.v "fan_ctrl" 5445
+ms synth -l full fan_network.v "fan_network" 170964
+ms synth -l full xbar.v "xbar" 138449
 
