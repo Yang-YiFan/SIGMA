@@ -210,6 +210,6 @@ module int8_multiplier(CLK, A, B, O);
   input CLK;
   output [23:0] O;
 
-  assign C = A * B;
+  assign O = A * B;
 
 endmodule
