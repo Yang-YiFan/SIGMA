@@ -9,7 +9,7 @@
 // NOTE: MORE VERIFICATION NEEDED
 /////////////////////////////////////////////////////////////
 
-module adder32(CLK, rst, A, B, O);
+module fp32_adder(CLK, rst, A, B, O);
 
   input [31:0] A, B;
   input CLK;
@@ -271,4 +271,27 @@ module addition_normaliser(in_e, in_m, out_e, out_m);
 	end
   end
 endmodule
-  
+
+module int_adder #(
+	parameter DATA_TYPE = 24) (
+	CLK,
+	rst,
+	A,
+	B,
+	O
+);
+
+  input [DATA_TYPE-1:0] A, B;
+  input CLK;
+  input rst;
+  output reg [DATA_TYPE-1:0] O;
+
+  always @ ( posedge CLK ) begin
+	if (rst == 1'b1) begin
+		O <= {DATA_TYPE{1'b0}};
+	end else begin
+		O <= A + B;
+	end
+  end
+
+endmodule

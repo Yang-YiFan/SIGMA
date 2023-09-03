@@ -151,14 +151,27 @@ module adder_switch # (
 		end
 	end
 	
-	// instantiate FP32 adder
-	adder32 my_adder (
-		.CLK(CLK),
-		.rst(rst),
-		.A(w_sel_data[DATA_TYPE+:DATA_TYPE]),
-		.B(w_sel_data[0+:DATA_TYPE]),
-		.O(w_O)
-	);
+	// instantiate adder
+	generate
+		if (DATA_TYPE == 32) begin // use fp32 adder
+			fp32_adder my_adder (
+				.CLK(CLK),
+				.rst(rst),
+				.A(w_sel_data[DATA_TYPE+:DATA_TYPE]),
+				.B(w_sel_data[0+:DATA_TYPE]),
+				.O(w_O)
+			);
+		end else begin // use int24 adder
+			int_adder #(
+				.DATA_TYPE(DATA_TYPE)) my_adder (
+				.CLK(CLK),
+				.rst(rst),
+				.A(w_sel_data[DATA_TYPE+:DATA_TYPE]),
+				.B(w_sel_data[0+:DATA_TYPE]),
+				.O(w_O)
+			);
+		end
+	endgenerate
 
 endmodule
 
