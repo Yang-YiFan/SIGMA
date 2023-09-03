@@ -11,11 +11,12 @@
 // NOTE: MORE VERIFICATION NEEDED
 /////////////////////////////////////////////////////////////
 
-module multiplier(CLK, A, B, O);
+// A and B are BF16, O is FP32
+module bf16_multiplier(CLK, A, B, O);
 
   input [15:0] A, B;
   input CLK;
-  output [15:0] O;
+  output [31:0] O;
 
   wire a_sign;
   wire b_sign;
@@ -23,7 +24,7 @@ module multiplier(CLK, A, B, O);
   wire [7:0] b_exponent;
   wire [7:0] a_mantissa;
   wire [7:0] b_mantissa;
-  wire [15:0] O;
+  wire [31:0] O;
              
   reg o_sign;
   reg [7:0]  o_exponent;
@@ -33,9 +34,11 @@ module multiplier(CLK, A, B, O);
   reg [15:0] multiplier_b_in;
   wire [15:0] multiplier_out;
 
-  assign O[15] = o_sign;
-  assign O[14:7] = o_exponent;
-  assign O[6:0] = o_mantissa[6:0];
+  assign O[31] = o_sign;
+  assign O[30:23] = o_exponent;
+  assign O[22:16] = o_mantissa[6:0];
+  // convert BF16 to FP32
+  assign O[15:0] = 16'h0000; 
 
   assign a_sign = A[15];
   assign a_exponent[7:0] = A[14:7];
@@ -200,4 +203,13 @@ module multiplication_normaliser(in_e, in_m, out_e, out_m);
 			out_m = in_m;
 		end
   end
+endmodule
+
+module int8_multiplier(CLK, A, B, O);
+  input [7:0] A, B;
+  input CLK;
+  output [23:0] O;
+
+  assign C = A * B;
+
 endmodule

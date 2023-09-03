@@ -8,7 +8,9 @@
 
 /////////////////////////////////////////////////////////////////////////
 
-module mult_switch(
+module mult_switch # (
+	parameter IN_DATA_TYPE = 16,
+	parameter OUT_DATA_TYPE = 32) (
 	CLK, 
 	rst,
 	i_valid, // input valid signal
@@ -21,17 +23,17 @@ module mult_switch(
 	input CLK;
 	input rst;
 	input i_valid;
-	input [15:0] i_data;
+	input [IN_DATA_TYPE-1:0] i_data;
 	input i_stationary;
 
 	output reg o_valid;
-	output [31:0] o_data;
+	output [OUT_DATA_TYPE-1:0] o_data;
 
-	reg [15:0] r_buffer; // buffer to hold stationary value
+	reg [IN_DATA_TYPE-1:0] r_buffer; // buffer to hold stationary value
 	reg r_buffer_valid; // valid buffer entry
 	
-	reg [15:0] w_A;
-	reg [15:0] w_B;
+	reg [IN_DATA_TYPE-1:0] w_A;
+	reg [IN_DATA_TYPE-1:0] w_B;
 	
 	// logic to store correct value into the stationary buffer
 	always @ (posedge CLK) begin
@@ -59,14 +61,22 @@ module mult_switch(
 	end
 
 	// instantiate multiplier 
-	multiplier my_multiplier (
-		.CLK(CLK),
-		.A(w_A), // stationary value
-		.B(w_B), // streaming value
-		.O(o_data[31:16])
-	);
-	
-	// convert BF16 to FP32
-	assign o_data[15:0] = 16'h0000; 
+	generate
+        if (IN_DATA_TYPE == 16) begin // use bf16 multiplier
+			bf16_multiplier my_multiplier (
+				.CLK(CLK),
+				.A(w_A), // stationary value
+				.B(w_B), // streaming value
+				.O(o_data)
+			);
+		end else begin // use int8 multiplier
+			int8_multiplier my_multiplier (
+				.CLK(CLK),
+				.A(w_A), // stationary value
+				.B(w_B), // streaming value
+				.O(o_data)
+			);
+		end
+	endgenerate
 
 endmodule

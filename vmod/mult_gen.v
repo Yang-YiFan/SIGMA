@@ -7,7 +7,8 @@
 
 /////////////////////////////////////////////////////////////////////////
 
-
+// IN_DATA_TYPE = 16, OUT_DATA_TYPE = 32, bf16 * bf16 = fp32
+// IN_DATA_TYPE = 8, OUT_DATA_TYPE = 24, int8 * int8 = int24
 module mult_gen # (
 	parameter IN_DATA_TYPE = 16,
 	parameter OUT_DATA_TYPE = 32,
@@ -45,7 +46,9 @@ module mult_gen # (
 
 			if (i == 0) begin : with_valid
 				// declare mult switcih
-				mult_switch my_mult_switch (
+				mult_switch # (
+					.IN_DATA_TYPE(IN_DATA_TYPE),
+					.OUT_DATA_TYPE(OUT_DATA_TYPE)) my_mult_switch (
 					.CLK(CLK),
 					.rst(rst),
 					.i_valid(r_valid),
@@ -55,7 +58,9 @@ module mult_gen # (
 					.o_data(o_data_bus[i*OUT_DATA_TYPE +: OUT_DATA_TYPE])
 				);
 			end else begin : without_valid
-				mult_switch my_mult_switch (
+				mult_switch #(
+					.IN_DATA_TYPE(IN_DATA_TYPE),
+					.OUT_DATA_TYPE(OUT_DATA_TYPE)) my_mult_switch (
 					.CLK(CLK),
 					.rst(rst),
 					.i_valid(r_valid),

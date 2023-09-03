@@ -46,7 +46,7 @@ module tb_mult ();
   end
 
 	// instantiate system
-	multiplier my_mult(
+	bf16_multiplier my_mult(
 		.CLK(CLK),
 		.A(A),
 		.B(B),
