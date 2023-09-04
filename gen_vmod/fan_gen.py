@@ -17,7 +17,7 @@ print "//##########################################################\n\n"
 
 DATA_TYPE = OUT_DATA_TYPE # true for reduction network (reduce with FP32)
 
-print "module fan_network # ("
+print "module fan_network%d # (" % (OUT_DATA_TYPE)
 print "\tparameter DATA_TYPE = ", OUT_DATA_TYPE, ","
 print "\tparameter NUM_PES = ", NUM_PES, ","
 print "\tparameter LOG2_PES = ", LOG2_PES, ") ("

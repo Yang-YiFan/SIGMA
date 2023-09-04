@@ -105,8 +105,8 @@ NA  r_mux_bus_ff[70,71]    r_mux_bus_ff[72,73]    r_mux_bus_ff[74,75]    r_mux_b
 
 module benes # (
 	parameter DATA_TYPE = 16, // data type
-	parameter NUM_PES = 8, // num of pes
-	parameter LEVELS = 7) ( // 2*(log2PE) + 1
+	parameter NUM_PES = 64, // num of pes
+	parameter LEVELS = 13) ( // 2*(log2PE) + 1
 	CLK,
 	rst,
 	i_data_bus, // input data bus
