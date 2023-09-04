@@ -295,3 +295,29 @@ module int_adder #(
   end
 
 endmodule
+
+module rf #(
+	parameter DATA_TYPE = 32,
+        parameter SIZE = 8,
+        parameter LOG2_SIZE = 3) (
+	CLK,
+	A,
+        rd_addr,
+        wr_addr,
+	O
+);
+
+  input [DATA_TYPE-1:0] A;
+  input [LOG2_SIZE-1:0] rd_addr;
+  input [LOG2_SIZE-1:0] wr_addr;
+  input CLK;
+  output [DATA_TYPE-1:0] O;
+  reg [DATA_TYPE-1:0] data [0:SIZE-1];
+
+  always @ ( posedge CLK ) begin
+      data[wr_addr] <= A;
+      O <= data[rd_addr];
+  end
+
+endmodule
+
