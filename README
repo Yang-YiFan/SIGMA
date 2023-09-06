@@ -35,3 +35,24 @@ ms synth -l full xbar.v "xbar" 138449
 
 - bf16: 75369
 - int8: 43417
+
+### adder_switch.v
+
+1 adder
+
+- fp32: 4848
+- int24: 1813
+
+### fan_network.v
+
+64 adder
+
+- fp32: 369910
+- int24: 160659
+
+### benes.v
+
+64 PE
+
+- 8b: 38936
+- 16b: 70111
