@@ -26,7 +26,7 @@ ms synth -l full benes.v "benes" 4518
 ms synth -l full fan_ctrl.v "fan_ctrl" 5445
 ms synth -l full fan_network.v "fan_network" 170964
 ms synth -l full xbar.v "xbar" 138449
-``````
+```
 
 
 ### mult_gen.v

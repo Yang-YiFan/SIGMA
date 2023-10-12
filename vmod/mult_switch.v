@@ -62,7 +62,14 @@ module mult_switch # (
 
 	// instantiate multiplier 
 	generate
-        if (IN_DATA_TYPE == 16) begin // use bf16 multiplier
+		if (IN_DATA_TYPE == 32) begin // use fp32 multiplier
+			fp32_multiplier my_multiplier (
+				.CLK(CLK),
+				.A(w_A), // stationary value
+				.B(w_B), // streaming value
+				.O(o_data)
+			);
+		end else if (IN_DATA_TYPE == 16) begin // use bf16 multiplier
 			bf16_multiplier my_multiplier (
 				.CLK(CLK),
 				.A(w_A), // stationary value

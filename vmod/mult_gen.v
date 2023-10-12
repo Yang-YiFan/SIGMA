@@ -7,6 +7,7 @@
 
 /////////////////////////////////////////////////////////////////////////
 
+// IN_DATA_TYPE = 32, OUT_DATA_TYPE = 32, fp32 * fp32 = fp32
 // IN_DATA_TYPE = 16, OUT_DATA_TYPE = 32, bf16 * bf16 = fp32
 // IN_DATA_TYPE = 8, OUT_DATA_TYPE = 24, int8 * int8 = int24
 module mult_gen # (
