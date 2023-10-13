@@ -17,6 +17,7 @@ High level details can be found in the powerpoint.
 
 ```bash
 ms synth -l full bfp16_mult.v "bf16_multiplier" 1092
+ms synth -l full bfp16_mult.v "fp32_multiplier" 6672
 ms synth -l full bfp32_adder.v "fp32_adder" 3463
 ms synth -l full mult_gen.v "mult_gen" 73369
 ms synth -l full adder_switch.v "adder_switch" 4816
@@ -33,6 +34,7 @@ ms synth -l full xbar.v "xbar" 138449
 
 64 multipler
 
+- fp32: 442844 (use 32 multiplier result * 2)
 - bf16: 75369
 - int8: 43417
 
