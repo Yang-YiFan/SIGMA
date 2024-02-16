@@ -11,9 +11,9 @@
 // IN_DATA_TYPE = 16, OUT_DATA_TYPE = 32, bf16 * bf16 = fp32
 // IN_DATA_TYPE = 8, OUT_DATA_TYPE = 24, int8 * int8 = int24
 module mult_gen # (
-	parameter IN_DATA_TYPE = 8,
-	parameter OUT_DATA_TYPE = 24,
-	parameter NUM_PES = 64) (
+	parameter IN_DATA_TYPE = 32,
+	parameter OUT_DATA_TYPE = 32,
+	parameter NUM_PES = 32) (
 	CLK, 
 	rst,
 	i_valid, 
